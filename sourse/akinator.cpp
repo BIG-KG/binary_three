@@ -54,7 +54,7 @@ node_t *add_question (node_t *curr_node)
     printf ("What word did you guess?\n");
     scanf  ("%s", rAns);
 
-    printf ("How is the hidden word different from ABA?\n");
+    printf ("How is the hidden word different from %s?\n", curr_node->data);
     getchar();
     scanf("%[^\n]", qush);
 

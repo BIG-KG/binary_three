@@ -30,4 +30,30 @@
     }
 #endif
 
+#define make_node(loading_file, saveTo, errorStream)            \
+    fscanf (loading_file, "%*[ ]");                             \
+                                                                \
+         startElementget = fgetc(loading_file);                 \
+    if      (startElementget == '*')                            \
+    {                                                           \
+        saveTo = NULL;                                          \
+    }                                                           \
+    else if (startElementget == '{')                            \
+    {                                                           \
+        ungetc (startElementget, loading_file);                 \
+        saveTo = make_three (loading_file, errorStream);}       \
+    else                                                        \
+    {                                                           \
+        ungetc (startElementget, loading_file)                    ; \
+        errorCheck (loading_file, errorStream, NO_NODE_START, '{'); \
+    }                                                           \
+                                                                \
+    if (*errorStream != 0) return NULL;                         \
+
+int            save_three (node_t *startingNode, FILE *savingFile);
+static node_t *make_three (FILE *loading_file, int *errorStream);
+node_t        *load_three (char *loadingFileName, int *errorStream);
+
+
+
 #endif /*THREE_DATA_BASE_F*/

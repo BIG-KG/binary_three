@@ -21,68 +21,30 @@ enum {
     STRING_END
 };
 
-static node_t *make_three (FILE *loading_file, int *errorStream);
-
 static node_t *make_three (FILE *loading_file, int *errorStream)
 {
+    node_t *newNode         = make_element ();
+    char    startElementget = 0;
+
     fscanf (loading_file, "%*[ ]");
     errorCheck (loading_file, errorStream, NO_NODE_START, '{' );
 
-    node_t *newNode = make_element ();
     fscanf (loading_file, "%*[^\']");
     errorCheck (loading_file, errorStream, NO_NODE_DATA,  '\'');
     fscanf (loading_file, "%[^\']", newNode->data);
+    printf("%s\n", newNode->data);
     errorCheck (loading_file, errorStream, NO_NODE_DATA,  '\'');
+    
 
 
+    make_node(loading_file, newNode->left,  errorStream);
 
-    fscanf (loading_file, "%*[ ]");
-
-    char startElementget = fgetc(loading_file);
-    if      (startElementget == '*')
-    {
-        newNode->left = NULL;
-    }
-    else if (startElementget == '{')
-    {
-        ungetc (startElementget, loading_file)                ;
-        newNode->left = make_three (loading_file, errorStream);
-    }
-    else
-    {
-        ungetc (startElementget, loading_file)                    ;
-        errorCheck (loading_file, errorStream, NO_NODE_START, '{');
-    }
-
-    if (*errorStream != 0) return NULL;
-
-
-
-    fscanf(loading_file, "%*[ ]");
-
-         startElementget = fgetc(loading_file);
-    if      (startElementget == '*')
-    {
-        newNode->right = NULL;
-    }
-    else if (startElementget == '{')
-    {
-        ungetc (startElementget, loading_file)                 ;
-        newNode->right = make_three (loading_file, errorStream);
-    }
-    else
-    {
-        ungetc (startElementget, loading_file)                    ;
-        errorCheck (loading_file, errorStream, NO_NODE_START, '{');
-    }
-
-    if (*errorStream != 0) return NULL;
+    make_node(loading_file, newNode->right, errorStream);
 
 
 
     fscanf(loading_file, "%*[ ]");
     errorCheck (loading_file, errorStream, NO_NODE_START, '}');
-
 
     return newNode;
 }
@@ -114,4 +76,18 @@ node_t *load_three (char *loadingFileName, int *errorStream)
 
 
 
+int save_three (node_t *startingNode, FILE *savingFile)
+{
+    fprintf(savingFile, "{ ");
+    fprintf(savingFile, " \'%s\' ", startingNode->data);
 
+    if (startingNode->left ) save_three(startingNode->left,  savingFile);
+    else                     fprintf(savingFile, " * ");
+
+    if (startingNode->right) save_three(startingNode->right, savingFile);
+    else                     fprintf(savingFile, " * ");
+
+    fprintf(savingFile, "}");
+
+    return 0;
+}
