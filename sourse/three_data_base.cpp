@@ -11,7 +11,7 @@
 #include "..\\stack\const.h"
 
 #include "..\\onegin\onegin.h"
-//#define  CONSOL_DEBAG
+#define  CONSOL_DEBAG
 
 
 enum {

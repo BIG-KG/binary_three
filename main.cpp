@@ -26,7 +26,7 @@ int main()
 
     threeStart = load_three("saving_file.txt", &errorStream);
     printf("%d", errorStream);
-    printing_dump(threeStart);
+    //printing_dump(threeStart);
 
     find_word(threeStart);
 

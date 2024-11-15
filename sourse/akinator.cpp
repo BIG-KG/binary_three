@@ -6,6 +6,7 @@
 
 #include "..\\headers\\three_funck.h"
 #include "..\\headers\\akinator.h"
+#include "..\\headers\\colors.h"
 
 
 
@@ -17,7 +18,7 @@ void find_word (node_t *node)
 
     while(  (currNode->left != NULL) && (currNode->right != NULL)  )
     {
-        printf("%s\n", currNode->data);
+        printf("\n%s%s%s\n", YELLOW, currNode->data, RESET);
 
         scanf("%s", answer);
 
@@ -26,8 +27,8 @@ void find_word (node_t *node)
         else                           currNode = currNode->left ;
     }
 
-    printf("%s\n", currNode->data);
-    printf("Is this your word?\n");
+    printf("%s%s%s\n", YELLOW, currNode->data, RESET );
+    printf("%sIs this your word?%s\n", YELLOW, RESET);
     scanf("%s", answer)         ;
 
     if(strcmp(answer, "yes") == 0) return                 ;
@@ -59,16 +60,7 @@ node_t *add_question (node_t *curr_node)
     scanf("%[^\n]", qush);
 
     printf ("If I ask this question to the word you asked, will the answer be YES?\n");
-
-    #ifdef   CONSOL_DEBAG_MY
-        printf("111\n");
-    #endif /*CONSOL_DEBAG_MY*/
-
     scanf  ("%s", tmpr);
-
-    #ifdef   CONSOL_DEBAG_MY
-        printf("222\n");
-    #endif /*CONSOL_DEBAG_MY*/
 
     if ( strcmp(tmpr, "yes") == 0)
     {
@@ -87,4 +79,25 @@ node_t *add_question (node_t *curr_node)
     curr_node->left  = l_node            ;
 
     return curr_node;
+}
+
+int akintor()
+{
+    int mode = 0;
+
+    while (mode != EXIT)
+    {
+        mode = aki_interface();
+
+        switch (expression)
+        {
+        case /* constant-expression */:
+            /* code */
+            break;
+        
+        default:
+            break;
+        }
+    }
+
 }

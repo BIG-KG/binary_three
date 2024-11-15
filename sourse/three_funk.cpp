@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <C:\MIPT\bit_three\headers\three_types.h>
-#include <C:\MIPT\bit_three\headers\three_const.h>
+#include "..\\headers\\three_types.h"
+#include "..\\headers\\three_const.h"
 
 void *startData = NULL;
 
