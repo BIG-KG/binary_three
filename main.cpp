@@ -6,12 +6,13 @@
 
 int main()
 {
-    node_t *first  = make_element ( );
-    sprintf(first->data, "Test");
+    node_t *first  = make_element ();
+    sprintf(first->data, "Football");
 
     for(int i = 0; i < 3; i ++)
     {
         find_word(first);
     }
 
+    printing_dump(first);
 }

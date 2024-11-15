@@ -4,6 +4,7 @@
 #include <C:\MIPT\bit_three\headers\three_types.h>
 #include <C:\MIPT\bit_three\headers\three_const.h>
 
+void *startData = NULL;
 
 node_t *make_element(void)
 {
@@ -30,6 +31,7 @@ node_t *make_element(void)
         dataArray = tmpPntr_;
     }
 
+    startData =    dataArray;
     return dataArray + (currentElement++);
 }
 
@@ -38,14 +40,20 @@ int printing_dump(node_t *node)
     printf("{");
 
     if (node->left  != NULL) printing_dump(node->left );
-    else                     printf("{}");
+    else                     printf("*");
 
-    printf("%d", node->data);
+    printf("%s", node->data);
 
     if (node->right != NULL) printing_dump(node->right);
-    else                     printf("{}");
+    else                     printf("*");
 
     printf("}");
 
+    return 0;
+}
+
+int delete_three(node_t *start_three)
+{
+    free(start_three);
     return 0;
 }

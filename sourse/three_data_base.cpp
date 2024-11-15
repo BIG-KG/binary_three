@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 
 #include "..\\headers\\three_funck.h"
@@ -11,56 +11,107 @@
 #include "..\\stack\const.h"
 
 #include "..\\onegin\onegin.h"
+//#define  CONSOL_DEBAG
 
 
 enum {
-    SYNTAX_ERROR = 1
+    NO_NODE_START = 1,
+    NO_NODE_END,
+    NO_NODE_DATA,
+    STRING_END
 };
 
+static node_t *make_three (FILE *loading_file, int *errorStream);
 
-node_t *make_three (string_start_end ** stringArr, int *currentWord)
+static node_t *make_three (FILE *loading_file, int *errorStream)
 {
+    fscanf (loading_file, "%*[ ]");
+    errorCheck (loading_file, errorStream, NO_NODE_START, '{' );
 
-    if (*StringArr[*currentWord++].startl != '{')
+    node_t *newNode = make_element ();
+    fscanf (loading_file, "%*[^\']");
+    errorCheck (loading_file, errorStream, NO_NODE_DATA,  '\'');
+    fscanf (loading_file, "%[^\']", newNode->data);
+    errorCheck (loading_file, errorStream, NO_NODE_DATA,  '\'');
+
+
+
+    fscanf (loading_file, "%*[ ]");
+
+    char startElementget = fgetc(loading_file);
+    if      (startElementget == '*')
     {
-        #ifdef   CONSOL_DEBAG
-            printf("ERROR: syntax error no node start : \"{\"\n");
-        #endif /*CONSOL_DEBAG*/
-
-        return NULL;
+        newNode->left = NULL;
+    }
+    else if (startElementget == '{')
+    {
+        ungetc (startElementget, loading_file)                ;
+        newNode->left = make_three (loading_file, errorStream);
+    }
+    else
+    {
+        ungetc (startElementget, loading_file)                    ;
+        errorCheck (loading_file, errorStream, NO_NODE_START, '{');
     }
 
-    node_t newNode = make_element();
+    if (*errorStream != 0) return NULL;
 
-    strcpy(newNode.data, StringArr[*currentWord++].startl + 1);
-    newNode.data[  strlen(newNode.data) - 1  ] = '\0'         ;
 
-    *currentWord ++;
-    if (StringArr[*currentWord] == '*') newNode.left  = NULL                              ;
-    else                                newNode.left  = make_three(stringArr, currentWord);
 
-    *currentWord ++;
-    if (StringArr[*currentWord] == '*') newNode.right = NULL                              ;
-    else                                newNode.right = make_three(stringArr, currentWord);
+    fscanf(loading_file, "%*[ ]");
 
-    *currentWord ++;
-    if (*StringArr[*currentWord].startl != '}')
+         startElementget = fgetc(loading_file);
+    if      (startElementget == '*')
     {
-        #ifdef   CONSOL_DEBAG
-            printf("ERROR: syntax error no node end : \"}\"\n");
-        #endif /*CONSOL_DEBAG*/
-
-        return NULL;
+        newNode->right = NULL;
     }
+    else if (startElementget == '{')
+    {
+        ungetc (startElementget, loading_file)                 ;
+        newNode->right = make_three (loading_file, errorStream);
+    }
+    else
+    {
+        ungetc (startElementget, loading_file)                    ;
+        errorCheck (loading_file, errorStream, NO_NODE_START, '{');
+    }
+
+    if (*errorStream != 0) return NULL;
+
+
+
+    fscanf(loading_file, "%*[ ]");
+    errorCheck (loading_file, errorStream, NO_NODE_START, '}');
 
 
     return newNode;
 }
 
-node_t *load_three (char *fileName)
+
+node_t *load_three (char *loadingFileName, int *errorStream)
 {
-    int commandsFile = open(argv[1], _O_BINARY | O_RDONLY );
+
+    FILE *loadingFile = fopen(loadingFileName, "r");
+    int innrErrStrng = 0                                          ;
 
 
+    #ifdef   CONSOLE_DEBUG_MY
+        printf("Start_making_three\n");
+    #endif /*CONSOLE_DEBUG_MY*/
 
+
+    node_t *threeStartNode = make_three (loadingFile, &innrErrStrng);
+    if (errorStream)   *errorStream = innrErrStrng;
+
+    if (innrErrStrng)  return NULL                ;
+
+    #ifdef   CONSOLE_DEBUG_MY
+        printf("End_making_three\n");
+    #endif /*CONSOLE_DEBUG_MY*/
+
+    return  threeStartNode;
 }
+
+
+
+

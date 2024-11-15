@@ -27,4 +27,6 @@ int file_size(int targetFile);
 
 int enter_text_struct(string_start_end ** pointToStringArr, int inputfile, char ** start);
 
+int entefile_to_string(int inputfile, char ** start);
+
 #endif // HEADER_H_INCLUDED

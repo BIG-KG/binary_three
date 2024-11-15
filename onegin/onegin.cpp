@@ -69,3 +69,18 @@ int file_size(int targetFile){
 	return file_size;
 
 }
+
+
+int entefile_to_string(int inputfile, char ** start)
+{
+	int inputFileSize  = 0;
+
+    inputFileSize = file_size(inputfile);
+
+    char *bufferString = (char *)calloc(inputFileSize + 2, sizeof(char));
+    int reatedElements = read(inputfile, bufferString, inputFileSize);
+
+    *start = bufferString;
+
+    return 0;
+}
