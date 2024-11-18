@@ -2,26 +2,32 @@
 #include <stdio.h>
 #include <string.h>
 #include <conio.h>
+#include <strings.h>      
 
 
 #include "..\\headers\\tree_funck.h"
 #include "..\\headers\\akinator.h"
 #include "..\\headers\\colors.h"
+#include "..\\headers\\errors.h"
 
 
 
-void find_word (tree_t *currtree)
-{
+static int yes_no_scan(tree_t *currTree, node_t *currNode, char *const RightWord);
+
+
+void find_word (tree_t *currTree)
+{   
     char answer[STRING_DATA_SIZE] = "";
-    node_t *currNode = currtree->treeStart;
+    node_t *currNode = currTree->treeStart;
 
     while(  (currNode->left != NULL) && (currNode->right != NULL)  )
     {
+
         printf("\n%s%s%s\n", YELLOW, currNode->data, RESET);
 
         scanf("%s", answer);
 
-        if(strcmp(answer, "yes") == 0) currNode = currNode->right;
+        if(strcasecmp(answer, "yes") == 0) currNode = currNode->right;
 
         else                           currNode = currNode->left ;
     }
@@ -30,55 +36,86 @@ void find_word (tree_t *currtree)
     printf("%sIs this your word?%s\n", YELLOW, RESET);
     scanf("%s", answer)         ;
 
-    if(strcmp(answer, "yes") == 0) return;
+    if(strcasecmp(answer, "yes") == 0) return;
 
-    else                           add_question (currNode, currtree);
+    else                           add_question (currNode, currTree);
 
     return;
-
 }
 
-node_t *add_question (node_t *curr_node, tree_t *currtree)
+node_t *add_question (node_t *currNode, tree_t *currTree)
 {
-    char    rAns[STRING_DATA_SIZE] = ""; // hardcoded size EVIL
+    char    rAns[STRING_DATA_SIZE] = ""; // FIXED hardcoded size EVIL
     char    qush[STRING_DATA_SIZE] = "";
-    char    tmpr[STRING_DATA_SIZE] = "";
-    node_t *r_node   = make_element (currtree);
-    node_t *l_node   = make_element (currtree);
 
+    printf ("%sWhat word did you guess?%s\n", YELLOW, RESET);
+    scanf("%*[\n]%[^\n]", rAns);
+
+    printf ("%sHow is the hidden word different from %s?%s\n", YELLOW, currNode->data, RESET);
+    scanf("%*[\n]%[^\n]", qush);
+
+    if ( yes_no_scan(currTree, currNode, rAns) ) return NULL;
+
+    strcpy (currNode->data, qush);
+   
+    return currNode;
+}
+
+static int yes_no_scan(tree_t *currTree, node_t *currNode, char *const RightWord)
+{
+    node_t *r_node   = make_element (currTree);
+    node_t *l_node   = make_element (currTree);
     if ( !r_node || !l_node )
     {
-        return NULL;
+        return NO_RAM_MEM;
     }
 
-    printf ("What word did you guess?\n");
-    scanf  ("%s", rAns);
+    currNode->right = r_node;
+    currNode->left  = l_node;
 
-    printf ("How is the hidden word different from %s?\n", curr_node->data);
-    getchar();
-    scanf("%[^\n]", qush);
+    char    tmpr[STRING_DATA_SIZE] = "";
 
-    printf ("If I ask this question to the word you asked, will the answer be YES?\n");
-    scanf  ("%s", tmpr); // function to scan yes or no
+    printf ("%sIf I ask this question to the word you asked, will the answer be YES?%s\n", YELLOW, RESET);
+    scanf("%*[\n]%[^\n]", tmpr); // FIXED function to scan yes or no
 
-    if ( strcmp(tmpr, "yes") == 0)
+    if ( strcasecmp(tmpr, "yes") == 0)
     {
-        strcpy (r_node->data, rAns)           ;
-        strcpy (l_node->data, curr_node->data);
+        strcpy (r_node->data, RightWord);
+        strcpy (l_node->data, currNode->data);
     }
 
     else
     {
-        strcpy (l_node->data, rAns)           ;
-        strcpy (r_node->data, curr_node->data);
-    }  
+        strcpy (l_node->data, RightWord);
+        strcpy (r_node->data, currNode->data);
+    }
 
-    strcpy (curr_node->data, qush);
-    curr_node->right = r_node            ;
-    curr_node->left  = l_node            ;
-
-    return curr_node;
+    return 0;    
 }
+
+
+node_t *finde_by_name(tree_t &searchingTree, char * const searchingWord)
+{
+    
+}
+
+node_t *finde_by_name_rec(node_t* startNode, char * const searchingWord, )
+{
+    if (!startNode->left || !startNode->right)
+    {
+        if( !strcasecmp(searchingWord, startNode->data)) return startNode;
+        else                                             return NULL;
+    }
+
+    node_t *tmpPtr = finde_by_name(startNode->right, searchingWord);
+    if (tmpPtr) return tmpPtr;
+
+            tmpPtr = finde_by_name(startNode->left,  searchingWord);
+    if (tmpPtr) return tmpPtr;
+
+    return NULL;
+
+} 
 
 // int akintor()
 // {

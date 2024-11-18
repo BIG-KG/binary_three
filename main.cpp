@@ -1,34 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include "headers\\three_funck.h"
+#include "headers\\tree_funck.h"
 #include "headers\\akinator.h"
-#include "headers\three_data_base_funk.h"
+#include "headers\tree_data_base_funk.h"
+
 
 int main()
-{
-    // node_t *first  = make_element ();
-    // sprintf(first->data, "Football");
+{   
+    // tree_t test_tree = {};
+
+    // //printf("start\n");
+    // node_t *start_node = make_element( &test_tree );
+    // strcpy(start_node->data, "GOOOL");
 
     // for(int i = 0; i < 3; i ++)
     // {
-    //     find_word(first);
+    //     //printf("cicke = %d\n", i);
+    //     find_word(&test_tree);
+    //     //printf("errr = %d\n\n", i);
     // }
 
-    // printing_dump(first);
+    // //printf("endcickle");
+    // printing_dump(test_tree.treeStart);
 
-    // FILE *savingFile = fopen("saving_file.txt", "w");
-    // save_three(first, savingFile);
-    // printf("end\n");
+    // save_tree(&test_tree, "test_save.txt");
 
-    // int errorStream = 0;
-    // node_t *threeStart = NULL;
+    //__________________________________________________________
+    //LOAD
+    int errors = 0;
+    tree_t test_load_three = {};
+    load_tree("test_save.txt", &test_load_three, &errors);
+    printf("error = %d", errors);
+    find_word(&test_load_three);
 
-    // threeStart = load_three("saving_file.txt", &errorStream);
-    // printf("%d", errorStream);
-    // //printing_dump(threeStart);
-
-    // find_word(threeStart);
-
+    delete_tree(&test_load_three);
     return 0;
 }

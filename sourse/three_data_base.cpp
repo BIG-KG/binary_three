@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "..\\headers\\three_types.h"
-#include "..\\headers\\three_funck.h"
-#include "..\\headers\\three_data_base_funk.h"
+#include "..\\headers\\tree_types.h"
+#include "..\\headers\\tree_funck.h"
+#include "..\\headers\\tree_data_base_funk.h"
 
 
 #include "..\\onegin\onegin.h"
@@ -28,9 +28,9 @@ enum {
 
 
 
-node_t *make_node (FILE *loading_file, int *errorStream, three_t *currThree)
+node_t *make_node (FILE *loading_file, int *errorStream, tree_t *currTree)
 {
-    node_t *newNode         = make_element (currThree);
+    node_t *newNode         = make_element (currTree);
     char    startElementget = 0;
 
     fscanf (loading_file, "%*[ ]");
@@ -40,14 +40,14 @@ node_t *make_node (FILE *loading_file, int *errorStream, three_t *currThree)
     fscanf (loading_file, "%*[^']");
     errorCheck (loading_file, errorStream, NO_NODE_DATA,  '\'');
     fscanf (loading_file, "%[^']", newNode->data);
-    //printf("%s\n", newNode->data);
+    
     errorCheck (loading_file, errorStream, NO_NODE_DATA,  '\'');
     
 
-    newNode->left  = scan_node(loading_file, errorStream, currThree);
+    newNode->left  = scan_node(loading_file, errorStream, currTree);
     if (*errorStream) return NULL;
 
-    newNode->right = scan_node(loading_file, errorStream, currThree);
+    newNode->right = scan_node(loading_file, errorStream, currTree);
     if (*errorStream) return NULL;
 
 
@@ -59,37 +59,34 @@ node_t *make_node (FILE *loading_file, int *errorStream, three_t *currThree)
 }
 
 
-three_t *load_three (char *loadingFileName, int *errorStream)
+tree_t *load_tree (char *loadingFileName, tree_t *currTree, int *errorStream )
 {
-
     FILE *loadingFile = fopen(loadingFileName, "r");
-    int innrErrStrng  = 0;
-    three_t *currThree = (three_t *)calloc(1, sizeof(three_t));                                          
 
     #ifdef   CONSOLE_DEBUG_MY
-        printf("Start_making_three\n");
+        printf("Start_making_tree\n");
     #endif /*CONSOLE_DEBUG_MY*/
 
-
-    node_t *threeStartNode = make_node (loadingFile, &innrErrStrng, currThree); // scan
-    currThree->threeStart = threeStartNode;
+    int innrErrStrng = 0;
+    node_t *treeStartNode = make_node (loadingFile, &innrErrStrng, currTree); // scan
+    currTree->treeStart = treeStartNode;
     if (errorStream)   *errorStream = innrErrStrng;
 
     if (innrErrStrng)  return NULL                ;
 
     #ifdef   CONSOLE_DEBUG_MY
-        printf("End_making_three\n");
+        printf("End_making_tree\n");
     #endif /*CONSOLE_DEBUG_MY*/
 
-    return  currThree;
+    return  currTree;
 }
 
 
-int save_three (three_t *savigThee, char * const fileName)
+int save_tree (tree_t *savigThee, char * const fileName)
 {
     FILE *savingFile = fopen(fileName, "w");
     
-    save_node(savigThee->threeStart, savingFile);
+    save_node(savigThee->treeStart, savingFile);
 
     fclose(savingFile);
 
@@ -113,7 +110,7 @@ int save_node (node_t *startingNode, FILE *savingFile)
 }
 
 
-node_t *scan_node (FILE* loading_file, int *errorStream, three_t *currThree)
+node_t *scan_node (FILE* loading_file, int *errorStream, tree_t *currTree)
 {          
     fscanf (loading_file, "%*[ ]");                             
                                                                 
@@ -125,7 +122,7 @@ node_t *scan_node (FILE* loading_file, int *errorStream, three_t *currThree)
     else if (startElementget == '{')                            
     {                                                           
         ungetc (startElementget, loading_file);                 
-        return make_node (loading_file, errorStream, currThree);}       
+        return make_node (loading_file, errorStream, currTree);}       
     else                                                        
     {                                                           
         ungetc (startElementget, loading_file)                    ; 

@@ -1,21 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "..\\headers\\three_types.h"
-#include "..\\headers\\three_const.h"
+#include "..\\headers\\tree_types.h"
+#include "..\\headers\\tree_const.h"
 
 
-node_t *make_element(three_t *currThree)
+node_t *make_element(tree_t *currTree)
 {
     
-    if (!currThree->occupiedMemStart) 
+    if (!currTree->occupiedMemStart) 
     {
-        currThree->occupiedMemStart = calloc (DATA_ARRAY_BASE_SIZE, sizeof(node_t));
+        currTree->occupiedMemStart = calloc (DATA_ARRAY_BASE_SIZE, sizeof(node_t));
+        currTree->treeStart = (node_t *)currTree->occupiedMemStart;
+        currTree->capacity  = DATA_ARRAY_BASE_SIZE;
     }
-    node_t **dataArray      = (node_t **)&currThree->occupiedMemStart;
 
-    int    *capacity       = &currThree->capacity;
-    int    *currentElement = &currThree->currentElement;
+    node_t **dataArray      = (node_t **)&currTree->occupiedMemStart;
+
+    int    *capacity        = &currTree->capacity;
+    int    *currentElement  = &currTree->currentElement;
 
     if (*capacity == *currentElement )
     {
@@ -35,8 +38,9 @@ node_t *make_element(three_t *currThree)
         *capacity  = newCapacity;
         *dataArray = tmpPntr_;
     }
-
-    return *dataArray + (*currentElement++);
+    *currentElement = *currentElement + 1;
+    
+    return *dataArray + (*currentElement - 1);
 }
 
 
@@ -57,8 +61,8 @@ int printing_dump(node_t *node)
     return 0;
 }
 
-int delete_three(node_t *start_three)
+int delete_tree(tree_t *deleatingTree)
 {
-    free(start_three);
+    free(deleatingTree->occupiedMemStart);
     return 0;
 }

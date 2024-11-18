@@ -1,7 +1,8 @@
-#ifndef THREE_TYPES
-#define THREE_TYPES
+#ifndef TREE_TYPES
+#define TREE_TYPES
 
 #include <stdint.h>
+#include "tree_const.h"
 typedef char elem_t;
 
 struct node_t
@@ -12,14 +13,20 @@ struct node_t
 
 };
 
-struct three_t
+struct tree_t
 {
     void   *occupiedMemStart = NULL; // remove
-    node_t *threeStart       = NULL;
+    node_t *treeStart       = NULL;
     int     capacity         = 0;
     int     currentElement   = 0;
 
 };
 
+struct node_way_t
+{
+    int  depth = 0;
+    int *way   = NULL;
 
-#endif /*THREE_TYPES*/
+}
+
+#endif /*TREE_TYPES*/
