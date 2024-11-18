@@ -21,14 +21,14 @@ int main()
     // save_three(first, savingFile);
     // printf("end\n");
 
-    int errorStream = 0;
-    node_t *threeStart = NULL;
+    // int errorStream = 0;
+    // node_t *threeStart = NULL;
 
-    threeStart = load_three("saving_file.txt", &errorStream);
-    printf("%d", errorStream);
-    //printing_dump(threeStart);
+    // threeStart = load_three("saving_file.txt", &errorStream);
+    // printf("%d", errorStream);
+    // //printing_dump(threeStart);
 
-    find_word(threeStart);
+    // find_word(threeStart);
 
     return 0;
 }

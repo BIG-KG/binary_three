@@ -4,19 +4,24 @@
 #include "..\\headers\\three_types.h"
 #include "..\\headers\\three_const.h"
 
-void *startData = NULL;
 
-node_t *make_element(void)
+node_t *make_element(three_t *currThree)
 {
-    static node_t *dataArray      = (node_t *)calloc (  DATA_ARRAY_BASE_SIZE, sizeof(node_t)  );
-    static int     capacity       = DATA_ARRAY_BASE_SIZE;
-    static int     currentElement = 0;
-
-    if ( capacity == currentElement )
+    
+    if (!currThree->occupiedMemStart) 
     {
-        int newCapacity  = capacity * STEP_ADDING_SIZE;
+        currThree->occupiedMemStart = calloc (DATA_ARRAY_BASE_SIZE, sizeof(node_t));
+    }
+    node_t **dataArray      = (node_t **)&currThree->occupiedMemStart;
 
-        node_t *tmpPntr_ = (node_t *) realloc(dataArray, newCapacity * sizeof(node_t));
+    int    *capacity       = &currThree->capacity;
+    int    *currentElement = &currThree->currentElement;
+
+    if (*capacity == *currentElement )
+    {
+        int newCapacity  = *capacity * STEP_ADDING_SIZE;
+
+        node_t *tmpPntr_ = (node_t *) realloc(*dataArray, newCapacity * sizeof(node_t));
 
         if (!tmpPntr_)
         {
@@ -27,13 +32,13 @@ node_t *make_element(void)
             return NULL;
         }
 
-        capacity  = newCapacity;
-        dataArray = tmpPntr_;
+        *capacity  = newCapacity;
+        *dataArray = tmpPntr_;
     }
 
-    startData =    dataArray;
-    return dataArray + (currentElement++);
+    return *dataArray + (*currentElement++);
 }
+
 
 int printing_dump(node_t *node)
 {

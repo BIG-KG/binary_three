@@ -4,17 +4,16 @@
 #include <conio.h>
 
 
-#include "..\\headers\\three_funck.h"
+#include "..\\headers\\tree_funck.h"
 #include "..\\headers\\akinator.h"
 #include "..\\headers\\colors.h"
 
 
 
-void find_word (node_t *node)
-
+void find_word (tree_t *currtree)
 {
     char answer[32] = "";
-    node_t *currNode = node;
+    node_t *currNode = currtree->treeStart;
 
     while(  (currNode->left != NULL) && (currNode->right != NULL)  )
     {
@@ -31,21 +30,21 @@ void find_word (node_t *node)
     printf("%sIs this your word?%s\n", YELLOW, RESET);
     scanf("%s", answer)         ;
 
-    if(strcmp(answer, "yes") == 0) return                 ;
+    if(strcmp(answer, "yes") == 0) return;
 
-    else                           add_question (currNode);
+    else                           add_question (currNode, currtree);
 
     return;
 
 }
 
-node_t *add_question (node_t *curr_node)
+node_t *add_question (node_t *curr_node, tree_t *currtree)
 {
-    char    rAns[64] = ""            ;
-    char    qush[64] = ""            ;
-    char    tmpr[64] = ""            ;
-    node_t *r_node   = make_element();
-    node_t *l_node   = make_element();
+    char    rAns[64] = ""; // hardcoded size EVIL
+    char    qush[64] = "";
+    char    tmpr[64] = "";
+    node_t *r_node   = make_element (currtree);
+    node_t *l_node   = make_element (currtree);
 
     if ( !r_node || !l_node )
     {
@@ -60,44 +59,47 @@ node_t *add_question (node_t *curr_node)
     scanf("%[^\n]", qush);
 
     printf ("If I ask this question to the word you asked, will the answer be YES?\n");
-    scanf  ("%s", tmpr);
+    scanf  ("%s", tmpr); // function to scan yes or no
 
     if ( strcmp(tmpr, "yes") == 0)
     {
-        sprintf (r_node->data, "%s", rAns)           ;
-        sprintf (l_node->data, "%s", curr_node->data);
+        strcpy (r_node->data, rAns)           ;
+        strcpy (l_node->data, curr_node->data);
     }
 
     else
     {
-        sprintf (l_node->data, "%s", rAns)           ;
-        sprintf (r_node->data, "%s", curr_node->data);
-    }
+        strcpy (l_node->data, rAns)           ;
+        strcpy (r_node->data, curr_node->data);
+    }  
 
-    sprintf (curr_node->data, "%s", qush);
+    strcpy (curr_node->data, qush);
     curr_node->right = r_node            ;
     curr_node->left  = l_node            ;
 
     return curr_node;
 }
 
-int akintor()
-{
-    int mode = 0;
+// int akintor()
+// {
+//     int mode = 0;
 
-    while (mode != EXIT)
-    {
-        mode = aki_interface();
+//     while (mode != EXIT)
+//     {
+//         mode = aki_interface();
 
-        switch (expression)
-        {
-        case /* constant-expression */:
-            /* code */
-            break;
-        
-        default:
-            break;
-        }
-    }
+//         switch (mode)
+//         {
+//         case    LOAD_tree:
+//             /* code */
+//             break;
 
-}
+//         default:
+//             break;
+//         }
+
+//     }
+
+    
+
+// }

@@ -8,7 +8,7 @@ enum {
     EXIT
 };
 
-node_t *add_question (node_t *curr_node);
-void    find_word(node_t *node);
+node_t *add_question (node_t *curr_node, three_t *currThree);
+void    find_word(three_t *node);
 
 #endif /*AKINATOR*/
