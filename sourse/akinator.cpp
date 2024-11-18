@@ -12,7 +12,7 @@
 
 void find_word (tree_t *currtree)
 {
-    char answer[32] = "";
+    char answer[STRING_DATA_SIZE] = "";
     node_t *currNode = currtree->treeStart;
 
     while(  (currNode->left != NULL) && (currNode->right != NULL)  )
@@ -40,9 +40,9 @@ void find_word (tree_t *currtree)
 
 node_t *add_question (node_t *curr_node, tree_t *currtree)
 {
-    char    rAns[64] = ""; // hardcoded size EVIL
-    char    qush[64] = "";
-    char    tmpr[64] = "";
+    char    rAns[STRING_DATA_SIZE] = ""; // hardcoded size EVIL
+    char    qush[STRING_DATA_SIZE] = "";
+    char    tmpr[STRING_DATA_SIZE] = "";
     node_t *r_node   = make_element (currtree);
     node_t *l_node   = make_element (currtree);
 

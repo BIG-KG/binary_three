@@ -1,7 +1,7 @@
-#ifndef  THREE_DATA_BASE_F
-#define  THREE_DATA_BASE_F
+#ifndef  TREE_DATA_BASE_F
+#define  TREE_DATA_BASE_F
 
- #include "three_types.h"
+ #include "tree_types.h"
 
 
 // #define skip(stringArr, currentWord, errorStream)                                   \
@@ -33,13 +33,13 @@
     }
 #endif
 
-three_t       *make_three (FILE *loading_file, int *errorStream);
-three_t        *load_three (char *loadingFileName, int *errorStream);
-int            save_three (three_t *savigThee, char * const fileName);
+tree_t       *make_tree (FILE *loading_file, int *errorStream);
+tree_t        *load_tree (char *loadingFileName, int *errorStream);
+int            save_tree (tree_t *savigThee, char * const fileName);
 int            save_node  (node_t *startingNode, FILE *savingFile);
-node_t        *make_node  (FILE *loading_file, int *errorStream, three_t *currThree);
-node_t        *scan_node  (FILE* loading_file, int *errorStream, three_t *currThree);
+node_t        *make_node  (FILE *loading_file, int *errorStream, tree_t *currtree);
+node_t        *scan_node  (FILE* loading_file, int *errorStream, tree_t *currtree);
 
 
 
-#endif /*THREE_DATA_BASE_F*/
+#endif /*TREE_DATA_BASE_F*/

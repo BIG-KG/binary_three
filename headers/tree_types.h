@@ -6,9 +6,9 @@ typedef char elem_t;
 
 struct node_t
 {
-    elem_t  data[64] = "";//hardcode
-    node_t *right    = NULL; // alternate this on realloc
-    node_t *left     = NULL;
+    elem_t  data[STRING_DATA_SIZE] = "";//hardcode
+    node_t *right                  = NULL; // alternate this on realloc
+    node_t *left                   = NULL;
 
 };
 
