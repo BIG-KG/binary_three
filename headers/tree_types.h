@@ -27,6 +27,6 @@ struct node_way_t
     int  depth = 0;
     int *way   = NULL;
 
-}
+};
 
 #endif /*TREE_TYPES*/

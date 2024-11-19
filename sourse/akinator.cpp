@@ -15,8 +15,8 @@
 #include "..\stack\const.h"
 
 
-
-static int yes_no_scan(tree_t *currTree, node_t *currNode, char *const RightWord);
+static node_t *finde_by_name_rec (node_t* startNode, char * const searchingWord, int64_t way_stack, int *deep);
+static int     yes_no_scan       (tree_t *currTree, node_t *currNode, char *const RightWord);
 
 
 void find_word (tree_t *currTree)
@@ -98,7 +98,7 @@ static int yes_no_scan(tree_t *currTree, node_t *currNode, char *const RightWord
 }
 
 
-node_t *finde_by_name(tree_t *searchingTree, char * const searchingWord)
+node_way_t finde_by_name(tree_t *searchingTree, char * const searchingWord)
 {
     int64_t way_stack = stack_ctor();
     int     deep = 0;
@@ -108,7 +108,7 @@ node_t *finde_by_name(tree_t *searchingTree, char * const searchingWord)
     returningWay.depth = deep;
     returningWay.way = (int *) calloc(sizeof(int), deep);
 
-    for (int i = 0, i < deep, i ++)
+    for (int i = 0; i < deep; i ++)
     {
         returningWay.way[i] = pop(way_stack);
     }
@@ -116,28 +116,33 @@ node_t *finde_by_name(tree_t *searchingTree, char * const searchingWord)
     return returningWay;
 }
 
-node_t *finde_by_name_rec(node_t* startNode, char * const searchingWord, int64_t way_stack, int *deep)
+static node_t *finde_by_name_rec(node_t* startNode, char * const searchingWord, int64_t way_stack, int *deep)
 {
+    printf("_%s_   _%s_   %d    L = %p       R = %p  \n", startNode->data, searchingWord, strcasecmp(searchingWord, startNode->data), startNode->left, startNode->right);
+    
     if (!startNode->left || !startNode->right)
     {
-        if( !strcasecmp(searchingWord, startNode->data)) return startNode;
+        if( strcasecmp(searchingWord, startNode->data) == 0) 
+        {   
+            return startNode; 
+        }
         else                                             return NULL;
     }
 
-    node_t *tmpPtr = finde_by_name(startNode->right, searchingWord);
-    if (tmpPtr) 
+    node_t *tmpPtr = finde_by_name_rec(startNode->right, searchingWord, way_stack, deep);
+    if (tmpPtr != NULL) 
     {   
         push(way_stack, RIGHT);
-        *deep ++;
+        *deep = *deep + 1;
         return tmpPtr;
     }
 
 
-            tmpPtr = finde_by_name(startNode->left,  searchingWord);
-    if (tmpPtr) 
+            tmpPtr = finde_by_name_rec(startNode->left,  searchingWord, way_stack, deep);
+    if (tmpPtr != NULL) 
     {   
         push(way_stack, LEFT );
-        *deep ++;
+        *deep = *deep + 1;
         return tmpPtr;
     }
 

@@ -174,11 +174,11 @@ int64_t stack_ctor (void)
 
     if(allStack.numOFholse == 0)
     {
-        printf("lastnum = %d", allStack.lastNumOFStack);
+        //printf("lastnum = %d", allStack.lastNumOFStack);
         ptrTargetStack = &allStack.stacksArray[allStack.lastNumOFStack];
         name = allStack.lastNumOFStack;
         allStack.lastNumOFStack ++;
-        printf("@1\n");
+        //printf("@1\n");
     }
 
     else
@@ -186,7 +186,7 @@ int64_t stack_ctor (void)
         name = allStack.holes[allStack.numOFholse];
         ptrTargetStack = &allStack.stacksArray[name];
         allStack.numOFholse --;
-        printf("@2\n");
+        //printf("@2\n");
     }
 
 
