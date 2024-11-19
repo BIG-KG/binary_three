@@ -1,1 +1,1 @@
-{  'eto technologia' {  'GOOOL'  *  * }{  'new technology or old?' {  'calc'  *  * }{  'comp complectuyushaya ?' {  'telefon'  *  * }{  'RTX 4090'  *  * }}}}
+{  'eto technology?' {  'stol'  *  * }{  'new technology or old?' {  'calc'  *  * }{  'comp complectuyushaya ?' {  'telefon'  *  * }{  'RTX 4090'  *  * }}}}

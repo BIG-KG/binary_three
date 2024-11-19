@@ -35,6 +35,12 @@ node_t *make_element(tree_t *currTree)
             return NULL;
         }
 
+        for(int i = 0; i < currTree->capacity; i ++)
+        {
+            currTree->treeStart[i].right += (tmpPntr_ - currTree->treeStart);
+            currTree->treeStart[i].left  += (tmpPntr_ - currTree->treeStart);
+        }
+
         *capacity  = newCapacity;
         *dataArray = tmpPntr_;
     }
