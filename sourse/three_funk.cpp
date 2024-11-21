@@ -11,17 +11,19 @@ node_t *make_element(tree_t *currTree)
     if (!currTree->occupiedMemStart) 
     {
         currTree->occupiedMemStart = calloc (DATA_ARRAY_BASE_SIZE, sizeof(node_t));
-        currTree->treeStart = (node_t *)currTree->occupiedMemStart;
-        currTree->capacity  = DATA_ARRAY_BASE_SIZE;
+        currTree->treeStart        = (node_t *)currTree->occupiedMemStart;
+        currTree->capacity         = DATA_ARRAY_BASE_SIZE;
     }
 
     node_t **dataArray      = (node_t **)&currTree->occupiedMemStart;
 
-    int    *capacity        = &currTree->capacity;
-    int    *currentElement  = &currTree->currentElement;
+    int     *capacity        = &currTree->capacity;
+    int     *currentElement  = &currTree->currentElement;
+    printf("new_node");
 
     if (*capacity == *currentElement )
     {
+        printf("start realloc");
         int newCapacity  = *capacity * STEP_ADDING_SIZE;
 
         node_t *tmpPntr_ = (node_t *) realloc(*dataArray, newCapacity * sizeof(node_t));

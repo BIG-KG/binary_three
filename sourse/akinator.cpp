@@ -16,33 +16,33 @@
 
 
 static node_t *finde_by_name_rec (node_t* startNode, char * const searchingWord, int64_t way_stack, int *deep);
-static int     yes_no_scan       (tree_t *currTree, node_t *currNode, char *const RightWord);
+static int     right_left_scan   (tree_t *currTree, node_t *currNode, char *const RightWord);
 
 
 void find_word (tree_t *currTree)
 {   
     char answer[STRING_DATA_SIZE] = "";
-    node_t *currNode = currTree->treeStart;
+    node_t *currNode              = currTree->treeStart;
+    int userAns                   = 0;
 
     while(  (currNode->left != NULL) && (currNode->right != NULL)  )
     {
 
         printf("\n%s%s%s\n", YELLOW, currNode->data, RESET);
+        userAns = yes_no_scan();
 
-        scanf("%s", answer);
+        if( userAns == 1) currNode = currNode->right;
 
-        if(strcasecmp(answer, "yes") == 0) currNode = currNode->right;
-
-        else                           currNode = currNode->left ;
+        else              currNode = currNode->left ;
     }
 
-    printf("%s%s%s\n", YELLOW, currNode->data, RESET );
-    printf("%sIs this your word?%s\n", YELLOW, RESET);
-    scanf("%s", answer)         ;
+    printf ("%s%s%s\n", YELLOW, currNode->data, RESET );
+    printf ("%sIs this your word?%s\n", YELLOW, RESET );
+    userAns = yes_no_scan();
 
-    if(strcasecmp(answer, "yes") == 0) return;
+    if( userAns == 1 ) return;
 
-    else                           add_question (currNode, currTree);
+    else               add_question (currNode, currTree);
 
     return;
 }
@@ -58,17 +58,17 @@ node_t *add_question (node_t *currNode, tree_t *currTree)
     printf ("%sHow is the hidden word different from %s?%s\n", YELLOW, currNode->data, RESET);
     scanf("%*[\n]%[^\n]", qush);
 
-    if ( yes_no_scan(currTree, currNode, rAns) ) return NULL;
+    if ( right_left_scan (currTree, currNode, rAns) ) return NULL;
 
     strcpy (currNode->data, qush);
    
     return currNode;
 }
 
-static int yes_no_scan(tree_t *currTree, node_t *currNode, char *const RightWord)
+static int right_left_scan (tree_t *currTree, node_t *currNode, char *const RightWord)
 {
-    node_t *r_node   = make_element (currTree);
-    node_t *l_node   = make_element (currTree);
+    node_t *r_node = make_element (currTree);
+    node_t *l_node = make_element (currTree);
     if ( !r_node || !l_node )
     {
         return NO_RAM_MEM;
@@ -80,9 +80,9 @@ static int yes_no_scan(tree_t *currTree, node_t *currNode, char *const RightWord
     char    tmpr[STRING_DATA_SIZE] = "";
 
     printf ("%sIf I ask this question to the word you asked, will the answer be YES?%s\n", YELLOW, RESET);
-    scanf("%*[\n]%[^\n]", tmpr); // FIXED function to scan yes or no
+    int right_qsh = yes_no_scan();
 
-    if ( strcasecmp(tmpr, "yes") == 0)
+    if ( right_qsh == 1 )
     {
         strcpy (r_node->data, RightWord);
         strcpy (l_node->data, currNode->data);
@@ -97,51 +97,60 @@ static int yes_no_scan(tree_t *currTree, node_t *currNode, char *const RightWord
     return 0;    
 }
 
+int yes_no_scan()
+{
+    char tmpr[STRING_DATA_SIZE] = {};
+    char skip[10] = {};
+    scanf ("%s", tmpr);
+    int ans = !strcasecmp (tmpr, "yes");
+    //printf("_%s_  _%s_  ans = %d", skip, tmpr, ans);
+    return ( ans );
+}
 
-node_way_t finde_by_name(tree_t *searchingTree, char * const searchingWord)
+node_way_t finde_by_name (char * const searchingWord, tree_t *searchingTree)
 {
     int64_t way_stack = stack_ctor();
     int     deep = 0;
 
-    finde_by_name_rec(searchingTree->treeStart, searchingWord, way_stack, &deep);
+    finde_by_name_rec (searchingTree->treeStart, searchingWord, way_stack, &deep);
     node_way_t returningWay = {};
     returningWay.depth = deep;
-    returningWay.way = (int *) calloc(sizeof(int), deep);
+    returningWay.way = (int *) calloc (sizeof(int), deep);
 
     for (int i = 0; i < deep; i ++)
     {
-        returningWay.way[i] = pop(way_stack);
+        returningWay.way[i] = pop (way_stack);
     }
 
     return returningWay;
 }
 
-static node_t *finde_by_name_rec(node_t* startNode, char * const searchingWord, int64_t way_stack, int *deep)
+static node_t *finde_by_name_rec (node_t* startNode, char * const searchingWord, int64_t way_stack, int *deep)
 {
-    printf("_%s_   _%s_   %d    L = %p       R = %p  \n", startNode->data, searchingWord, strcasecmp(searchingWord, startNode->data), startNode->left, startNode->right);
+    //printf("_%s_   _%s_   %d    L = %p       R = %p  \n", startNode->data, searchingWord, strcasecmp(searchingWord, startNode->data), startNode->left, startNode->right);
     
-    if (!startNode->left || !startNode->right)
+    if ( !startNode->left || !startNode->right )
     {
-        if( strcasecmp(searchingWord, startNode->data) == 0) 
+        if( strcasecmp (searchingWord, startNode->data) == 0) 
         {   
-            return startNode; 
+             return startNode; 
         }
-        else                                             return NULL;
+        else return NULL;
     }
 
-    node_t *tmpPtr = finde_by_name_rec(startNode->right, searchingWord, way_stack, deep);
+    node_t *tmpPtr = finde_by_name_rec (startNode->right, searchingWord, way_stack, deep);
     if (tmpPtr != NULL) 
     {   
-        push(way_stack, RIGHT);
+        push (way_stack, RIGHT);
         *deep = *deep + 1;
         return tmpPtr;
     }
 
 
-            tmpPtr = finde_by_name_rec(startNode->left,  searchingWord, way_stack, deep);
+            tmpPtr = finde_by_name_rec (startNode->left,  searchingWord, way_stack, deep);
     if (tmpPtr != NULL) 
     {   
-        push(way_stack, LEFT );
+        push (way_stack, LEFT );
         *deep = *deep + 1;
         return tmpPtr;
     }
@@ -149,6 +158,37 @@ static node_t *finde_by_name_rec(node_t* startNode, char * const searchingWord, 
     return NULL;
 
 } 
+
+int give_definition(char * const name, tree_t *searchingTree)
+{
+    node_way_t searching_way = finde_by_name(name, searchingTree);
+    node_t    *currNode      = searchingTree->treeStart;
+
+    if(searching_way.depth == 0)
+    {
+        printf("No such data\n");
+        return 1;
+    }
+    
+    printf("%s%s%s\n", YELLOW, name, RESET);
+
+    for(int i = 0; i < searching_way.depth; i ++)
+    {
+        if(searching_way.way[i] == 1)
+        {
+            printf("%s: YES\n", currNode->data);
+            currNode = currNode->right;
+        }
+        else
+        {
+            printf("%s: NO\n",  currNode->data);
+            currNode = currNode->left;
+        }
+
+    }
+
+    return 0;
+}
 
 // int akintor()
 // {

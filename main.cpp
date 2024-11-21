@@ -31,19 +31,27 @@ int main()
     //LOAD
     int errors = 0;
     tree_t test_load_three = {};
+    printf("start load\n");
     load_tree("test_save.txt", &test_load_three, &errors);
+    printf("endload errors = %d\n", errors);
     //printf("error = %d", errors);
-    find_word(&test_load_three);
-
-    //printf("start\n");
-    node_way_t test_way = finde_by_name(&test_load_three, "RTX 4090");
-    printf("end      %d\n", test_way.depth);
-
-    for(int i = 0; i < test_way.depth; i++)
-    {   
-        //printf("adasd\n");
-        printf("sxs%d = _%d_\n", i, (test_way.way)[i]);
+    for (int i = 0; i < 3; i ++)
+    {
+        find_word(&test_load_three);
     }
+
+    save_tree(&test_load_three, "test_save.txt");
+    //printf("start\n");
+    // node_way_t test_way = finde_by_name(&test_load_three, "RTX 4090");
+    // printf("end      %d\n", test_way.depth);
+
+    // for(int i = 0; i < test_way.depth; i++)
+    // {   
+    //     //printf("adasd\n");
+    //     printf("sxs%d = _%d_\n", i, (test_way.way)[i]);
+    // }
+
+    //give_definition("RTX 4090", &test_load_three);
 
     delete_tree(&test_load_three);
     
