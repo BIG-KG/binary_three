@@ -1,0 +1,30 @@
+digraph G {	node14644416 [shape=Mrecord, style="rounded, filled" label= "postapocalips" ]; 
+node14644416 -> node14644560
+	node14644560 [shape=Mrecord, style="rounded, filled" label= "in our time" ]; 
+node14644560 -> node14644704
+	node14644704 [shape=Mrecord, style="rounded, filled" label= "RPG" ]; 
+node14644704 -> node14644848
+	node14644848 [shape=Mrecord, style="rounded, filled" label= "space marin 2" ]; 
+node14644704 -> node14644992
+	node14644992 [shape=Mrecord, style="rounded, filled" label= "Starfield" ]; 
+node14644560 -> node14645136
+	node14645136 [shape=Mrecord, style="rounded, filled" label= "spider man" ]; 
+node14644416 -> node14645280
+	node14645280 [shape=Mrecord, style="rounded, filled" label= "Bethesda game" ]; 
+node14645280 -> node14645424
+	node14645424 [shape=Mrecord, style="rounded, filled" label= "metro 2033" ]; 
+node14645280 -> node14645568
+	node14645568 [shape=Mrecord, style="rounded, filled" label= "2D game" ]; 
+node14645568 -> node14645712
+	node14645712 [shape=Mrecord, style="rounded, filled" label= "main character try to find son" ]; 
+node14645712 -> node14645856
+	node14645856 [shape=Mrecord, style="rounded, filled" label= "Fallout 3" ]; 
+node14645712 -> node14646000
+	node14646000 [shape=Mrecord, style="rounded, filled" label= "Fallout 4" ]; 
+node14645568 -> node14646144
+	node14646144 [shape=Mrecord, style="rounded, filled" label= "fist game of seria" ]; 
+node14646144 -> node14646288
+	node14646288 [shape=Mrecord, style="rounded, filled" label= "Fallout 2" ]; 
+node14646144 -> node14646432
+	node14646432 [shape=Mrecord, style="rounded, filled" label= "Fallout 1" ]; 
+}

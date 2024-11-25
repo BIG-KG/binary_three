@@ -16,7 +16,7 @@
 
 
 static node_t *finde_by_name_rec (node_t* startNode, char * const searchingWord, int64_t way_stack, int *deep);
-static int     right_left_scan   (tree_t *currTree, node_t *currNode, char *const RightWord);
+static int right_left_scan   (tree_t *currTree, node_t *currNode, char *const RightWord);
 
 
 void find_word (tree_t *currTree)
@@ -28,7 +28,7 @@ void find_word (tree_t *currTree)
     while(  (currNode->left != NULL) && (currNode->right != NULL)  )
     {
 
-        printf("\n%s%s%s\n", YELLOW, currNode->data, RESET);
+        printf("\n%s%s?%s\n", YELLOW, currNode->data, RESET);
         userAns = yes_no_scan();
 
         if( userAns == 1) currNode = currNode->right;

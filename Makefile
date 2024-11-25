@@ -1,7 +1,7 @@
 all: hello
 
-hello:  main.o three_funk.o akinator.o three_data_base.o onegin.o stackfunk.o canary.o const.o
-	g++ main.o three_funk.o akinator.o three_data_base.o onegin.o stackfunk.o canary.o const.o -o hell.exe
+hello:  main.o three_funk.o akinator.o three_data_base.o onegin.o stackfunk.o canary.o const.o dump.o
+	g++ main.o three_funk.o akinator.o three_data_base.o onegin.o stackfunk.o canary.o const.o dump.o -o hell.exe
 
 main.o:    main.cpp
 	g++ -c main.cpp
@@ -26,6 +26,9 @@ canary.o:	stack\\canary.cpp
 
 const.o:	stack\\const.cpp
 	g++ -c 	stack\\const.cpp
+
+dump.o:    sourse\dump.cpp
+	g++ -c sourse\dump.cpp
 
 clean:
 	rm -rf *.o hello2

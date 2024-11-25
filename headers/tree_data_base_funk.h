@@ -33,8 +33,8 @@
     }
 #endif
 
-tree_t       *make_tree (FILE *loading_file, int *errorStream);
-tree_t       *load_tree (char *loadingFileName, tree_t *currTree, int *errorStream );
+tree_t        *make_tree (FILE *loading_file, int *errorStream);
+tree_t        *load_tree (char *loadingFileName, tree_t *currTree, int *errorStream );
 int            save_tree (tree_t *savigThee, char * const fileName);
 int            save_node  (node_t *startingNode, FILE *savingFile);
 node_t        *make_node  (FILE *loading_file, int *errorStream, tree_t *currtree);

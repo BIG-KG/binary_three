@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "..\\headers\\tree_types.h"
-#include "..\\headers\\tree_const.h"
+#include "..\\headers\tree_types.h"
+#include "..\\headers\tree_const.h"
+#include "..\\headers\tree_funck.h"
 
 
 node_t *make_element(tree_t *currTree)
@@ -39,12 +40,15 @@ node_t *make_element(tree_t *currTree)
 
         for(int i = 0; i < currTree->capacity; i ++)
         {
-            currTree->treeStart[i].right += (tmpPntr_ - currTree->treeStart);
-            currTree->treeStart[i].left  += (tmpPntr_ - currTree->treeStart);
+            tmpPntr_[i].right += (tmpPntr_ - (node_t *)currTree->occupiedMemStart);
+            tmpPntr_[i].left  += (tmpPntr_ - (node_t *)currTree->occupiedMemStart);
         }
 
+        currTree->treeStart = tmpPntr_;
         *capacity  = newCapacity;
-        *dataArray = tmpPntr_;
+
+        //free(currTree->occupiedMemStart);
+        currTree->occupiedMemStart = tmpPntr_;
     }
     *currentElement = *currentElement + 1;
     
