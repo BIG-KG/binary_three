@@ -2,6 +2,7 @@
 #define AKINATOR
 
 
+
 enum mode{
     LOAD_TREE = 1,
     SAVE_TREE,
