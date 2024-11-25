@@ -8,51 +8,19 @@
 
 node_t *make_element(tree_t *currTree)
 {
-    
-    if (!currTree->occupiedMemStart) 
+    printf("make node\n");
+    node_t *tmpPntr_ = (node_t *)calloc(1, sizeof(node_t));
+
+    if (tmpPntr_ == NULL)
     {
-        currTree->occupiedMemStart = calloc (DATA_ARRAY_BASE_SIZE, sizeof(node_t));
-        currTree->treeStart        = (node_t *)currTree->occupiedMemStart;
-        currTree->capacity         = DATA_ARRAY_BASE_SIZE;
+        #ifdef CONSOLE_DEBUG
+            printf("No RAM space to add new tree element\n");
+        #endif
+
+        return NULL;
     }
 
-    node_t **dataArray      = (node_t **)&currTree->occupiedMemStart;
-
-    int     *capacity        = &currTree->capacity;
-    int     *currentElement  = &currTree->currentElement;
-    printf("new_node");
-
-    if (*capacity == *currentElement )
-    {
-        printf("start realloc");
-        int newCapacity  = *capacity * STEP_ADDING_SIZE;
-
-        node_t *tmpPntr_ = (node_t *) realloc(*dataArray, newCapacity * sizeof(node_t));
-
-        if (!tmpPntr_)
-        {
-            #ifdef CONSOLE_DEBAG
-                printf("ERROR: not enough memory to expand array.\n");
-            #endif
-
-            return NULL;
-        }
-
-        for(int i = 0; i < currTree->capacity; i ++)
-        {
-            tmpPntr_[i].right += (tmpPntr_ - (node_t *)currTree->occupiedMemStart);
-            tmpPntr_[i].left  += (tmpPntr_ - (node_t *)currTree->occupiedMemStart);
-        }
-
-        currTree->treeStart = tmpPntr_;
-        *capacity  = newCapacity;
-
-        //free(currTree->occupiedMemStart);
-        currTree->occupiedMemStart = tmpPntr_;
-    }
-    *currentElement = *currentElement + 1;
-    
-    return *dataArray + (*currentElement - 1);
+    return tmpPntr_;
 }
 
 
@@ -73,8 +41,21 @@ int printing_dump(node_t *node)
     return 0;
 }
 
-int delete_tree(tree_t *deleatingTree)
+int delete_tree(node_t *deleatingNode)
 {
-    free(deleatingTree->occupiedMemStart);
+    if (!deleatingNode) return 0;
+
+    if(deleatingNode->left != NULL)
+    {
+        delete_tree(deleatingNode->left);
+    }
+
+    if(deleatingNode->right != NULL)
+    {
+        delete_tree(deleatingNode->right);
+    }
+
+    free(deleatingNode);
+
     return 0;
 }

@@ -18,7 +18,6 @@
 static node_t *finde_by_name_rec (node_t* startNode, char * const searchingWord, int64_t way_stack, int *deep);
 static int right_left_scan   (tree_t *currTree, node_t *currNode, char *const RightWord);
 
-
 void find_word (tree_t *currTree)
 {   
     char answer[STRING_DATA_SIZE] = "";
@@ -42,20 +41,39 @@ void find_word (tree_t *currTree)
 
     if( userAns == 1 ) return;
 
-    else               add_question (currNode, currTree);
+    else               add_question (currNode, currTree, WORD);
 
     return;
 }
 
-node_t *add_question (node_t *currNode, tree_t *currTree)
+node_t *add_question (node_t *currNode, tree_t *currTree, int addingType)
 {
     char    rAns[STRING_DATA_SIZE] = ""; // FIXED hardcoded size EVIL
     char    qush[STRING_DATA_SIZE] = "";
 
-    printf ("%sWhat word did you guess?%s\n", YELLOW, RESET);
+
+    if (addingType == WORD)
+    {
+        printf ("%sWhat word did you guess?%s\n", YELLOW, RESET);
+    }
+
+    if (addingType == QUESH)
+    {
+        printf ("%sWhat word to add to the created element?%s\n", YELLOW, RESET);
+    }
+
+
     scanf("%*[\n]%[^\n]", rAns);
 
-    printf ("%sHow is the hidden word different from %s?%s\n", YELLOW, currNode->data, RESET);
+    if (addingType == WORD)
+    {
+        printf ("%sHow is the hidden word different from %s?%s\n", YELLOW, currNode->data, RESET);
+    }
+    if (addingType == QUESH)
+    {
+        printf ("What is the dividing question?");
+    }
+
     scanf("%*[\n]%[^\n]", qush);
 
     if ( right_left_scan (currTree, currNode, rAns) ) return NULL;
@@ -159,10 +177,11 @@ static node_t *finde_by_name_rec (node_t* startNode, char * const searchingWord,
 
 } 
 
-int give_definition(char * const name, tree_t *searchingTree)
+
+int give_definition(char * const name, tree_t *currTree)
 {
-    node_way_t searching_way = finde_by_name(name, searchingTree);
-    node_t    *currNode      = searchingTree->treeStart;
+    node_way_t searching_way = finde_by_name(name, currTree);
+    node_t    *currNode      = currTree->treeStart;
 
     if(searching_way.depth == 0)
     {
@@ -186,6 +205,115 @@ int give_definition(char * const name, tree_t *searchingTree)
         }
 
     }
+
+    return 0;
+}
+
+int add_before(tree_t *currTree)
+{
+    printf("add_before\n");
+    node_t *currNode     = currTree->treeStart;
+    node_t *prevNode     = NULL;
+    int     deepCounter  = 0;
+    bool    userAns      = 0;
+
+    printf("startsrch\n");
+
+    while(currNode->left != NULL && currNode->right != NULL)
+    {
+        printf("%sadd before this:\n\t%s %s", YELLOW, currNode->data, RESET);
+
+        if (yes_no_scan() == 1)
+        {
+            if (deepCounter > 0) add_question(prevNode, currTree, QUESH);
+        
+            else addStart(currTree);
+
+            return 0;
+        }
+        else
+        {
+            printf("%sWright \"YES\" to move to right branch, \"NO\" to left\n%s", YELLOW, RESET);
+            if ( (userAns = yes_no_scan()) == 1 )
+            {
+                prevNode = currNode;
+                currNode = currNode->right;
+                deepCounter++;
+                continue;
+            }
+            else if( (userAns = yes_no_scan()) == 0 )
+            {
+                prevNode = currNode;
+                currNode = currNode->right;
+                deepCounter++;
+                continue;
+
+            }
+
+            else
+            {
+                assert(0);
+            }
+        }
+        
+    }
+
+    printf("You have reached the last branch: \"%s\", add a question before it?", currNode->data);
+    if( yes_no_scan() == 1 )
+    {
+        add_question(prevNode, currTree, QUESH);
+    }
+
+    return 0;
+}
+
+int addStart(tree_t *currTree)
+{
+    char    rAns[STRING_DATA_SIZE] = ""; // FIXED hardcoded size EVIL
+    char    qush[STRING_DATA_SIZE] = "";
+
+
+    printf ("%sWhat word to add to the created element?%s\n", YELLOW, RESET);
+
+    scanf("%*[\n]%[^\n]", rAns);
+
+    printf ("%sWhat word to add to the created element?%s\n", YELLOW, RESET);
+
+    printf ("What is the dividing question?");
+
+    scanf("%*[\n]%[^\n]", qush);
+
+    node_t * newStart = make_element(currTree);
+    strcpy(newStart->data, qush);
+
+    if ( right_left_scanStart (currTree, newStart, rAns) ) return -1;
+   
+    return 0;
+}
+
+int right_left_scanStart(tree_t *currTree, node_t *newStart, char *rAns)
+{
+
+    //ADD CHECKING
+    node_t *q_node = make_element (currTree);
+    strcpy (q_node->data, rAns);
+
+    printf ("%sIf I ask this question to the word you asked, will the answer be YES?%s\n", YELLOW, RESET);
+    int right_qsh = yes_no_scan();
+
+    if ( right_qsh == 1 )
+    {
+        newStart->right = q_node;
+        newStart->left  = currTree->treeStart; 
+    }
+
+    else
+    {
+        newStart->right = currTree->treeStart;
+        newStart->left  = q_node; 
+    }
+
+    currTree->treeStart = newStart;
 
     return 0;
 }

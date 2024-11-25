@@ -1,27 +1,46 @@
-digraph G {	node6976704 [shape=Mrecord, style="rounded, filled| data = postapocalips? "]; 
-node6976704 -> node6976848
-	node6976848 [shape=Mrecord, style="rounded, filled| data = in our time "]; 
-node6976848 -> node6976992
-	node6976992 [shape=Mrecord, style="rounded, filled| data = RPG "]; 
-node6976992 -> node6977136
-	node6977136 [shape=Mrecord, style="rounded, filled| data = space marin 2 "]; 
-node6976992 -> node6977280
-	node6 [shape=Mrecord,style="rounded, filled",  label="index: 6 | data: -666 | next: 7 | prev: -1",fillcolor="lightblue"]
-	node6977280 [shape=Mrecord, style="rounded, filled| data = Starfield "]; 
-node6976848 -> node6977424
-	node6977424 [shape=Mrecord, style="rounded, filled| data = spider man "]; 
-node6976704 -> node6977568
-	node6977568 [shape=Mrecord, style="rounded, filled| data = in USA "]; 
-node6977568 -> node6977712
-	node6977712 [shape=Mrecord, style="rounded, filled| data = metro 2033? "]; 
-node6977568 -> node6977856
-	node6977856 [shape=Mrecord, style="rounded, filled| data = 2D game "]; 
-node6977856 -> node6978000
-	node6978000 [shape=Mrecord, style="rounded, filled| data = Fallout 4 "]; 
-node6977856 -> node6978144
-	node6978144 [shape=Mrecord, style="rounded, filled| data = fist game of seria? "]; 
-node6978144 -> node6978288
-	node6978288 [shape=Mrecord, style="rounded, filled| data = Fallout 2 "]; 
-node6978144 -> node6978432
-	node6978432 [shape=Mrecord, style="rounded, filled| data = Fallout 1 "]; 
+digraph G {	node17177760 [shape=Mrecord, style="rounded, filled" label= "Game" ]; 
+node17177760 -> node17177920
+	node17177920 [shape=Mrecord, style="rounded, filled" label= "Avatar" ]; 
+node17177760 -> node17178080
+	node17178080 [shape=Mrecord, style="rounded, filled" label= "postapocalips" ]; 
+node17178080 -> node17178240
+	node17178240 [shape=Mrecord, style="rounded, filled" label= "in our time" ]; 
+node17178240 -> node17200368
+	node17200368 [shape=Mrecord, style="rounded, filled" label= "RPG" ]; 
+node17200368 -> node17200528
+	node17200528 [shape=Mrecord, style="rounded, filled" label= "in future" ]; 
+node17200528 -> node17200688
+	node17200688 [shape=Mrecord, style="rounded, filled" label= "Wolfenstein" ]; 
+node17200528 -> node17200848
+	node17200848 [shape=Mrecord, style="rounded, filled" label= "space marin 2" ]; 
+node17200368 -> node17201008
+	node17201008 [shape=Mrecord, style="rounded, filled" label= "Starfield" ]; 
+node17178240 -> node17201168
+	node17201168 [shape=Mrecord, style="rounded, filled" label= "Is the main character involved in illegal activities" ]; 
+node17201168 -> node17201328
+	node17201328 [shape=Mrecord, style="rounded, filled" label= "spider man" ]; 
+node17201168 -> node17201488
+	node17201488 [shape=Mrecord, style="rounded, filled" label= "about hacking" ]; 
+node17201488 -> node17201648
+	node17201648 [shape=Mrecord, style="rounded, filled" label= "GTA" ]; 
+node17201488 -> node17201808
+	node17201808 [shape=Mrecord, style="rounded, filled" label= "wach dogs" ]; 
+node17178080 -> node17201968
+	node17201968 [shape=Mrecord, style="rounded, filled" label= "Bethesda game" ]; 
+node17201968 -> node17202128
+	node17202128 [shape=Mrecord, style="rounded, filled" label= "metro 2033" ]; 
+node17201968 -> node17202288
+	node17202288 [shape=Mrecord, style="rounded, filled" label= "2D game" ]; 
+node17202288 -> node17204928
+	node17204928 [shape=Mrecord, style="rounded, filled" label= "main character try to find son" ]; 
+node17204928 -> node17205248
+	node17205248 [shape=Mrecord, style="rounded, filled" label= "Fallout 3" ]; 
+node17204928 -> node17205408
+	node17205408 [shape=Mrecord, style="rounded, filled" label= "Fallout 4" ]; 
+node17202288 -> node17206208
+	node17206208 [shape=Mrecord, style="rounded, filled" label= "fist game of seria" ]; 
+node17206208 -> node17205088
+	node17205088 [shape=Mrecord, style="rounded, filled" label= "Fallout 2" ]; 
+node17206208 -> node17205568
+	node17205568 [shape=Mrecord, style="rounded, filled" label= "Fallout 1" ]; 
 }

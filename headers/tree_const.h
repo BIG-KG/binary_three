@@ -10,4 +10,9 @@ enum{
     RIGHT
 };
 
+enum{
+    WORD,
+    QUESH
+};
+
 #endif /*TREE_CONST*/

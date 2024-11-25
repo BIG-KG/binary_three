@@ -15,10 +15,10 @@ struct node_t
 
 struct tree_t
 {
-    void   *occupiedMemStart = NULL; // remove
+    //void   *occupiedMemStart = NULL; // remove
     node_t *treeStart       = NULL;
-    int     capacity         = 0;
-    int     currentElement   = 0;
+    //int     capacity         = 0;
+    //int     currentElement   = 0;
 
 };
 

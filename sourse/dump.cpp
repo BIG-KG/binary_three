@@ -60,6 +60,7 @@ char *generate_png(tree_t *dumpingTree, int dumpNum)
     return pngFile_name;
 }
 
+
 void print_node(node_t *curr_node, FILE *txtFile)
 {
     fprintf (txtFile, "\tnode%d [shape=Mrecord, style=\"rounded, filled\" label= \"%s\" ]; \n",

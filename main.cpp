@@ -9,24 +9,6 @@
 
 int main()
 {   
-    // tree_t test_tree = {};
-
-    // //printf("start\n");
-    // node_t *start_node = make_element( &test_tree );
-    // strcpy(start_node->data, "GOOOL");
-
-    // for(int i = 0; i < 3; i ++)
-    // {
-    //     //printf("cicke = %d\n", i);
-    //     find_word(&test_tree);
-    //     //printf("errr = %d\n\n", i);
-    // }
-
-    // //printf("endcickle");
-    // printing_dump(test_tree.treeStart);
-
-    // save_tree(&test_tree, "test_save.txt");
-
     //__________________________________________________________
     //LOAD
     int errors = 0;
@@ -35,18 +17,21 @@ int main()
     load_tree("test_save.txt", &test_load_three, &errors);
     printf("endload errors = %d\n", errors);
 
-    for (int i = 0; i < 1; i ++)
-    {
-        find_word(&test_load_three);
-        generate_png (&test_load_three, 0);
+    // for (int i = 0; i < 1; i ++)
+    // {
+    //     find_word(&test_load_three);
 
-    }
+    // }
 
-    save_tree (&test_load_three, "test_save.txt");
+    // printf("asdasd\n");
+    // add_before(&test_load_three);
+    // printf("dvcd\n");
+
+    // save_tree (&test_load_three, "test_save.txt");
 
     generate_png (&test_load_three, 0);
 
-    delete_tree (&test_load_three);
+    delete_tree (test_load_three.treeStart);
     
     return 0;
 }

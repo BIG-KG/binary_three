@@ -12,7 +12,7 @@
 
 
 #define errorCheck(loading_file, errorStream, ERROR_NUM, symb);                     \
-if (fgetc (loading_file) != symb )                                                   \
+if (fgetc (loading_file) != symb )                                                  \
 {                                                                                   \
     *errorStream = ERROR_NUM;                                                       \
     return NULL;                                                                    \
@@ -40,6 +40,7 @@ node_t *make_node (FILE *loading_file, int *errorStream, tree_t *currTree)
     fscanf (loading_file, "%*[^']");
     errorCheck (loading_file, errorStream, NO_NODE_DATA,  '\'');
     fscanf (loading_file, "%[^']", newNode->data);
+    //printf("%s\n", newNode->data);
     
     errorCheck (loading_file, errorStream, NO_NODE_DATA,  '\'');
     
